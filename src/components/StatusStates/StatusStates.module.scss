@@ -1,0 +1,88 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid v.$color-border;
+  border-top-color: v.$color-primary;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: v.$space-5;
+}
+
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.skeletonImage {
+  aspect-ratio: 1 / 1;
+  border-radius: v.$radius-md;
+  background: v.$color-surface;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.skeletonLine {
+  height: 12px;
+  border-radius: 4px;
+  background: v.$color-surface;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.statusBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-3;
+  padding: v.$space-8 v.$space-4;
+  text-align: center;
+}
+
+.statusTitle {
+  font-size: v.$font-size-lg;
+  font-weight: 600;
+}
+
+.statusMessage {
+  color: v.$color-text-muted;
+  max-width: 40ch;
+}
+
+.retryButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  padding: v.$space-2 v.$space-5;
+  border-radius: v.$radius-sm;
+  background: v.$color-primary;
+  color: v.$color-primary-contrast;
+  font-weight: 600;
+  transition: opacity v.$transition-fast;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}

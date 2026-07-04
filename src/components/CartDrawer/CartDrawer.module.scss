@@ -1,0 +1,122 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: v.$color-overlay;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity v.$transition-base;
+  z-index: 30;
+
+  &[data-open] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: v.$drawer-width;
+  max-width: 100vw;
+  background: v.$color-bg;
+  box-shadow: v.$shadow-lg;
+  z-index: 31;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform v.$transition-base;
+
+  &[data-open] {
+    transform: translateX(0);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: v.$space-4 v.$space-5;
+  border-bottom: 1px solid v.$color-border;
+}
+
+.heading {
+  font-size: v.$font-size-md;
+  font-weight: 700;
+}
+
+.closeButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  font-size: v.$font-size-xl;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: v.$radius-sm;
+
+  &:hover {
+    background: v.$color-surface;
+  }
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 v.$space-5;
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-4;
+  color: v.$color-text-muted;
+}
+
+.summary {
+  border-top: 1px solid v.$color-border;
+  padding: v.$space-4 v.$space-5 v.$space-5;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: v.$font-size-sm;
+  color: v.$color-text-muted;
+}
+
+.total {
+  font-size: v.$font-size-md;
+  font-weight: 700;
+  color: v.$color-text;
+  margin-top: v.$space-1;
+}
+
+.continueButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  margin-top: v.$space-3;
+  text-align: center;
+  padding: v.$space-3;
+  border-radius: v.$radius-sm;
+  background: v.$color-primary;
+  color: v.$color-primary-contrast;
+  font-weight: 600;
+  transition: opacity v.$transition-fast;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}

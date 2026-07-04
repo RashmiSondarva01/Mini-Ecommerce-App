@@ -1,0 +1,42 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.picker {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
+  overflow: hidden;
+
+  &[data-disabled] {
+    opacity: 0.5;
+  }
+}
+
+.stepButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: v.$font-size-md;
+  transition: background v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: v.$color-surface;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: v.$color-text-muted;
+  }
+}
+
+.value {
+  min-width: 32px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}

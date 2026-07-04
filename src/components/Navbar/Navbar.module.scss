@@ -1,0 +1,41 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: v.$navbar-height;
+  background: v.$color-bg;
+  border-bottom: 1px solid v.$color-border;
+}
+
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-size: v.$font-size-lg;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cartButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: v.$radius-sm;
+  color: v.$color-text;
+
+  &:hover {
+    background: v.$color-surface;
+  }
+}

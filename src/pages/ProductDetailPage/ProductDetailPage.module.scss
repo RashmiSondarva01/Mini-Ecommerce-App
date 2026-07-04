@@ -1,0 +1,93 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.page {
+  padding: v.$space-6 0 v.$space-8;
+}
+
+.centerState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: v.$space-7;
+
+  @include m.respond-below(v.$breakpoint-mobile) {
+    grid-template-columns: 1fr;
+    gap: v.$space-5;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+}
+
+.brand {
+  font-size: v.$font-size-sm;
+  color: v.$color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.title {
+  font-size: v.$font-size-xl;
+  font-weight: 700;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: v.$space-3;
+}
+
+.originalPrice {
+  color: v.$color-text-muted;
+  text-decoration: line-through;
+}
+
+.price {
+  font-size: v.$font-size-lg;
+  font-weight: 700;
+}
+
+.description {
+  color: v.$color-text-muted;
+  line-height: 1.5;
+}
+
+.addRow {
+  display: flex;
+  align-items: center;
+  gap: v.$space-4;
+  margin-top: v.$space-3;
+}
+
+.addButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  flex: 1;
+  text-align: center;
+  padding: v.$space-3;
+  border-radius: v.$radius-sm;
+  background: v.$color-primary;
+  color: v.$color-primary-contrast;
+  font-weight: 600;
+  transition: opacity v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    background: v.$color-surface;
+    color: v.$color-text-muted;
+    cursor: not-allowed;
+  }
+}

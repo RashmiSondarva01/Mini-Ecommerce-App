@@ -1,0 +1,87 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.groupLabel {
+  font-size: v.$font-size-sm;
+  font-weight: 600;
+  color: v.$color-text-muted;
+}
+
+.swatchRow {
+  display: flex;
+  gap: v.$space-2;
+}
+
+.swatch {
+  @include m.button-reset;
+  @include m.focus-ring;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid v.$color-bg;
+  box-shadow: 0 0 0 1px v.$color-border;
+  transition: box-shadow v.$transition-fast;
+
+  &[data-selected] {
+    box-shadow: 0 0 0 2px v.$color-primary;
+  }
+
+  &:hover {
+    box-shadow: 0 0 0 2px v.$color-text-muted;
+  }
+}
+
+.sizeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-2;
+}
+
+.sizeButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: v.$space-2 v.$space-3;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
+  font-weight: 600;
+  transition: border-color v.$transition-fast, background v.$transition-fast;
+
+  &[data-selected] {
+    border-color: v.$color-primary;
+    background: v.$color-primary;
+    color: v.$color-primary-contrast;
+  }
+
+  &[data-status='low-stock']:not([data-selected]) {
+    border-color: v.$color-warning;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: v.$color-text-muted;
+    background: v.$color-surface;
+    text-decoration: line-through;
+  }
+
+  &:hover:not(:disabled):not([data-selected]) {
+    border-color: v.$color-text;
+  }
+}
+
+.sizeStatus {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}

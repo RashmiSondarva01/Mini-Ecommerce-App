@@ -1,0 +1,62 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.row {
+  display: flex;
+  gap: v.$space-3;
+  padding: v.$space-4 0;
+  border-bottom: 1px solid v.$color-border;
+}
+
+.image {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  background: v.$color-surface;
+  border-radius: v.$radius-sm;
+  padding: v.$space-2;
+  flex: 0 0 auto;
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-weight: 600;
+  font-size: v.$font-size-sm;
+  @include m.truncate(2);
+}
+
+.variant {
+  font-size: v.$font-size-sm;
+  color: v.$color-text-muted;
+}
+
+.price {
+  font-weight: 600;
+  font-size: v.$font-size-sm;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: v.$space-2;
+}
+
+.removeButton {
+  @include m.button-reset;
+  @include m.focus-ring;
+  font-size: v.$font-size-sm;
+  color: v.$color-text-muted;
+  text-decoration: underline;
+
+  &:hover {
+    color: v.$color-danger;
+  }
+}

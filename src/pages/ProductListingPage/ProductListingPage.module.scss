@@ -1,0 +1,11 @@
+@use 'styles/variables' as v;
+
+.page {
+  padding: v.$space-6 0 v.$space-8;
+}
+
+.heading {
+  font-size: v.$font-size-xl;
+  font-weight: 700;
+  margin-bottom: v.$space-5;
+}

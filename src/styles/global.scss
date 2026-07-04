@@ -1,0 +1,60 @@
+@use 'variables' as v;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: v.$font-family-base;
+  font-size: v.$font-size-base;
+  color: v.$color-text;
+  background: v.$color-bg;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.app-container {
+  max-width: v.$max-content-width;
+  margin: 0 auto;
+  padding: 0 v.$space-5;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    padding: 0 v.$space-4;
+  }
+}
