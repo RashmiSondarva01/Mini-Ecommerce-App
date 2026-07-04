@@ -1,15 +1,19 @@
 # Decisions
 
-## The one decision that could have gone either way: Context + `useReducer` vs. Redux/Zustand
+## The decision I could have gone either way on: Context + useReducer vs Redux/Zustand
 
-The app's entire global state surface is a single cart (an array of line items) plus a drawer-open boolean. There's no auth, no multi-entity caching, no undo/redo, nothing cross-cutting that a dedicated store library earns its keep on. So I went with `CartContext` + `useReducer`: a reducer with explicit actions (`ADD_ITEM`, `UPDATE_QUANTITY`, `REMOVE_ITEM`, `OPEN_DRAWER`, `CLOSE_DRAWER`) gives me the same predictable, action-based state transitions Redux is known for, without adding a dependency, a provider-wrapping ritual, or a learning curve for whoever reads the code next.
+For this app, all the global state is just the cart items and whether the cart drawer is open or closed. That's it — no login, no complicated data caching, nothing fancy. Because of that, I didn't think a full state management library like Redux was worth adding.
 
-The honest trade-off: every component that calls `useCart()` re-renders whenever *any* part of the cart state changes, because Context doesn't support fine-grained selector subscriptions the way Redux or Zustand do. Right now that's a non-issue — a cart with a handful of line items re-rendering a navbar badge and a drawer is not a performance problem. If this app grew to have many independent pieces of global state, or if the cart itself needed to scale to hundreds of live-updating items, I'd reach for Zustand specifically (lighter than Redux, still gives selector-based subscriptions) rather than keep bolting more contexts on. I didn't pick Redux/Zustand here because that would be optimizing for a scale this app doesn't have — the honest answer is "the simplest thing that fully solves today's problem," not "the most impressive thing."
+I used React's built-in Context + useReducer instead. I set up a reducer with clear actions like `ADD_ITEM`, `UPDATE_QUANTITY`, `REMOVE_ITEM`, `OPEN_DRAWER`, `CLOSE_DRAWER`. This gives me the same predictable way of updating state that Redux is known for, but without pulling in an extra library or extra setup.
 
-## What I'd clean up or do differently with more time
+The downside: every component that uses the cart re-renders whenever anything in the cart changes, because Context doesn't let you subscribe to just one small piece of state the way Redux or Zustand can. For this app that doesn't matter — the cart only ever has a few items. If the app got a lot bigger, or had way more separate pieces of global state, I'd probably switch to Zustand, since it's lighter than Redux but still avoids extra re-renders. I didn't want to add that complexity now for a problem I don't actually have.
 
-The color/size "pick a sensible default variant" logic is duplicated in spirit — `ProductCard`'s quick-add does it one way (first in-stock size) and `ProductDetailPage`'s URL-driven selection does it another. I'd pull that into one shared hook instead of two similar-but-not-identical implementations.
+## What I'd improve with more time
 
-I'd also add real tests. I skipped them for this pass, but the cart reducer and the deterministic variant/price generators are pure functions with no side effects — exactly the kind of code that's cheap to test and expensive to get subtly wrong (off-by-one quantity clamping, a stock status that flips between reloads). Those would be the first things I'd cover.
+Right now, the logic that picks a default color/size for a product is written twice in two different places — once for the "quick add" button on the product list, and once on the product detail page. They do almost the same thing but not quite identically. I'd combine this into one shared function so there's only one place to fix if something breaks.
 
-The product grid isn't virtualized or paginated, which is fine for the Fake Store API's 20 products but wouldn't hold up against a real catalog. And I'd want to actually test the app with a screen reader rather than just adding `aria-*` attributes that look correct — accessibility markup that hasn't been driven with real assistive tech is a guess, not a verification.
+I also didn't write any automated tests. With more time, I'd start with the cart logic and the code that generates product variants and prices, since those are simple functions that are easy to test and easy to get subtly wrong (like quantity limits or stock status).
+
+The product list also isn't paginated or virtualized — that's fine for the 20 products this API gives us, but it wouldn't hold up for a real store with thousands of items.
+
+Lastly, I added accessibility attributes (aria-labels, roles, etc.) based on what's generally correct, but I never actually tested it with a real screen reader. I'd want to do that to make sure it actually works for someone using one, not just that it looks right on paper.
